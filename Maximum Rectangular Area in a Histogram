@@ -1,0 +1,65 @@
+//https://practice.geeksforgeeks.org/problems/maximum-rectangular-area-in-a-histogram/0?fbclid=IwAR0wWFaBeJ7mZczJLqCXMRmPRPRgnN25_zDdJgjaUXQCOOURBze4UuSAQ70
+
+
+#include <bits/stdc++.h>
+using namespace std;
+
+typedef long long ll ; 
+
+int  main() {
+    
+    
+    ll t ; 
+    cin >> t ; 
+    while ( t-- )
+    {
+        ll n , ans = 0 , right = n ; 
+        cin >> n ; 
+        ll arr [ n ] ; 
+        for ( ll i = 0 ; i < n ; i ++ )
+            cin >> arr [ i ] ; 
+        stack < ll > stk ; 
+       for ( ll i = 0 ; i < n ; i ++ )
+       {
+            ll x ; 
+            if ( !stk.empty() )
+                x = arr [ stk.top() ] ;
+            else 
+                x = INT_MIN ; 
+                
+            if ( arr [ i ]  >= x )
+                stk.push (  i ) ; 
+            else 
+            {
+                right = i ; 
+                while ( !stk.empty() and arr [ stk.top() ]  >= arr [ i ] )
+                {
+                    ll pp = stk.top() , temp  ; 
+                    stk.pop() ; 
+                    
+                    
+                    if ( !stk.empty() )
+                        temp = arr [pp ] * (  right - stk.top() - 1  ) ;
+                    else
+                        temp = arr [ pp ] * ( right ) ; 
+                    ans = max ( ans , temp ) ; 
+                }
+                stk.push ( i  ) ; 
+            }
+       }
+       right = n ; 
+       while ( !stk.empty() )
+       {
+            ll pp = stk.top() , temp  ; 
+            stk.pop() ;
+            if ( !stk.empty() )
+                temp = arr [pp ] * (  right - stk.top() - 1  ) ;
+            else
+                temp = arr [ pp ] * ( right ) ; 
+            ans = max ( ans , temp ) ; 
+       }
+       cout << ans << endl ; 
+    }
+	//code
+	return 0;
+}
