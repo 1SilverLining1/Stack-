@@ -1,0 +1,55 @@
+//https://practice.geeksforgeeks.org/problems/count-the-reversals/0
+
+
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    
+    
+    
+    
+    int t ; 
+    cin >> t ; 
+    while ( t-- )
+    {
+        string s , temp ; 
+        cin >> s ; 
+        stack < int > stk ; 
+        for ( int i = 0 ; i < s.length(); i ++ )
+        {
+            if ( s [ i ] == '{' )
+                stk.push ( s [ i ] )  ; 
+            else 
+            {
+                if ( !stk.empty() and stk.top() == '{' )
+                    stk.pop() ; 
+                else 
+                    stk.push ( s [ i ] ) ; 
+            }
+        }
+        
+        while ( !stk.empty() )
+        {
+            temp += stk.top() ;
+            stk.pop() ; 
+        }
+        reverse ( temp.begin() , temp.end() ) ; 
+       // cout << temp << endl ; 
+        int n = temp.length() ; 
+        if ( n & 1 )
+        {
+            cout << -1 << endl ; 
+            continue ;
+        }
+        int i = 0 , c = 0 ; 
+        while ( !temp.empty() and temp [ i ] == temp [ 0 ] )
+            c++ , i++ ; 
+        if ( c & 1 )
+            cout << c / 2 + ( n - c )/2 + 2  << endl ; 
+        else
+            cout <<  c/ 2 + ( n - c ) / 2  << endl ; 
+    }
+	//code
+	return 0;
+}
