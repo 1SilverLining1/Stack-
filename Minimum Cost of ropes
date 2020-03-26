@@ -1,0 +1,105 @@
+//https://practice.geeksforgeeks.org/problems/minimum-cost-of-ropes/0?fbclid=IwAR1lI_uk_VISU49x86biW995X3tBbUrTtABXA0wgMCEdO_j2AKSv7QN2wDw
+
+
+
+#include <bits/stdc++.h>
+using namespace std;
+typedef long long ll ;
+class Heap 
+{
+    int cs , ss; 
+    int * arr ; 
+    public : 
+    
+    Heap( int ss )
+    {
+        
+       // cout << "shalini" << endl ; 
+        cs = 0 ; 
+        this->ss = ss ; 
+        arr = new int [ 10001 ] ; 
+    }
+    
+    void insert ( int x )
+    {
+        
+        //cout << cs << " " << x << "^^^^^^^^^^" << endl  ;
+        if (  cs  >= ss )
+        	cs -- ; 
+        	
+        arr [ cs ] = x ; 
+        int temp = cs ; 
+        cs ++ ; 
+        while ( temp > 0 and arr [ temp ]  < arr [ temp / 2 ] )
+        {
+            swap ( arr [ temp ] , arr [ temp / 2 ] ) ; 
+            temp = temp / 2 ;
+        }
+    }
+    void heapify ( int index )
+    {
+        int left = 2 * index +  1 ; 
+        int right = 2 * index + 2 ; 
+        int small = index ; 
+        if ( left < ss and arr [ left ] <= arr [ small ] )
+            small = left ; 
+            
+        if ( right < ss and arr [ right ] <= arr [ small ] )
+            small = right ; 
+            
+        if ( small != index )
+        {
+            swap ( arr [ small ] , arr [ index ] ) ; 
+            heapify ( small ) ; 
+        }
+    }
+    int getmin ( )
+    {
+        int temp = arr[ 0 ] ;
+        arr [ 0 ] = INT_MAX  ; 
+        //ss-- ; 
+        heapify ( 0 ) ; 
+        return temp ; 
+    }
+    
+    void display ()
+    {
+        for ( int i = 0 ; i < ss ; i ++ )
+            cout << arr [ i ] << " " ; 
+        cout << endl ; 
+    }
+};
+int main() {
+    //cout << "COOOOOOO" << endl ; 
+    
+    ll t ; 
+    cin >> t ; 
+   //cout << t <<  "***" << endl ; 
+    while ( t--)
+    {
+        ll n , ans = 0 ; 
+        cin >> n ; 
+        priority_queue <int, vector<int>, greater<int>> q ;  
+        for ( int i = 0 ; i < n ; i ++ )
+        {
+            ll x ; 
+            cin >> x ; 
+            q.push ( x ); 
+        }
+        //hp.display() ; 
+        while ( q.size() >= 2 )
+        { 
+           int x = q.top() ; 
+           q.pop() ; 
+           int y = q.top() ; 
+           q.pop() ; 
+           //cout << x << " " << y << endl ; 
+           ans += ( x + y ) ; 
+           q.push ( x + y ) ; 
+        }
+        
+        cout << ans << endl ; 
+    }
+	//code
+	return 0;
+}
