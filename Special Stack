@@ -1,0 +1,47 @@
+//https://practice.geeksforgeeks.org/problems/special-stack/1
+
+
+int mini ; 
+void push(int x)
+{
+    
+        if ( s.empty() )
+        {
+                s.push ( x ) ; 
+                mini = x ; 
+        }
+        else 
+        {
+            if ( x >= mini )
+                    s.push ( x ) ; 
+            else 
+            {
+                s.push (  ( 2 * x - mini )  ) ; 
+                mini = x ; 
+            }
+        }
+     //add code here.
+}
+
+bool isFull(int n)
+{
+     return s.size() >= n ; 
+}
+
+bool isEmpty()
+{
+    return s.empty() ; 
+}
+
+int pop()
+{
+     if ( s.top() < mini )
+            mini = 2 * mini - s.top() ; 
+        s.pop() ; 
+}
+
+int getMin()
+{
+         return mini ; 
+
+}
