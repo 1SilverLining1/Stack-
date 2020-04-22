@@ -1,0 +1,37 @@
+//https://leetcode.com/problems/reorganize-string/
+
+class Solution {
+public:
+    string reorganizeString(string s ) {
+        
+        
+       int mp [ 26 ] = {0};
+       memset ( mp , 0 , sizeof ( mp ) ) ;
+        for ( auto i : s )
+            mp [  i - 'a' ] ++ ; 
+        priority_queue  < pair < int , char > > q ; 
+        for ( int i = 0 ; i < 26 ; i ++ )
+        {
+            if ( mp [ i ] )
+                    q.push ( { mp [ i ]  , char ( i + 'a' ) } ) ; 
+        }
+        pair < int , char > prev = { 0 , '$' } ;
+        string ans ; 
+        while ( q.size() > 0 )
+        {
+            pair < int , char > temp = q.top() ;
+            ans += temp.second ; 
+            q.pop() ; 
+            if ( prev.first > 0 )
+                    q.push ( prev ) ; 
+            temp.first -- ; 
+            prev  = temp ; 
+            
+        }
+        
+        
+        if ( ans .size() != s.length()  )
+                return "" ; 
+        return ans ; 
+    }
+};
